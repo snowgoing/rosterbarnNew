@@ -6,7 +6,7 @@ var jsonServer = require('json-server');
 
 // Webpack
 gulp.task('webpack', function () {
-  return gulp.src('./src/app.js')
+  return gulp.src('./src/client/app.js')
     .pipe(webpack(require('./webpack.config.js')))
     .pipe(gulp.dest('./dist'));
 });
@@ -21,6 +21,14 @@ gulp.task('serve:api', function (cb) {
   apiServer.listen(config.get('api.port'));
 
   cb();
+});
+
+gulp.task('serveprod', function() {
+  connect.server({
+    root: './src/client/app.js',
+    port: process.env.PORT || 5000, // localhost:5000
+    livereload: false
+  });
 });
 
 // Simple Server
